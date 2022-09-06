@@ -1,0 +1,165 @@
+:root {
+  --fontSize-item: 0.875rem;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.intro {
+  gap: 0.5rem;
+  display: flex;
+}
+
+.intro-left {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+.intro-left-header {
+  padding: 0.25rem 1rem;
+  border-radius: 9999px;
+  background-color: rgb(255 237 213);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.intro-left-header-logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.intro-left-header-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #fff;
+  border-radius: 9999px;
+}
+
+.intro-left-header p {
+  color: rgb(249 115 22);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.intro-left-title {
+  font-size: 4.5rem;
+  color: rgb(46 46 46);
+  font-weight: 700;
+  letter-spacing: 0.025rem;
+}
+
+.intro-left-title span {
+  font-size: 5rem;
+  color: rgb(234 88 12);
+}
+
+.intro-left-content {
+  text-align: left;
+  width: 80%;
+  color: rgb(81 81 81);
+  font-size: 1rem;
+}
+
+.button-order {
+  width: auto;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  border-color: #fb923c;
+  color: rgb(81 81 81);
+  box-shadow: inset 0 0 0 0 #fb923c;
+  transition: ease-out 0.3s;
+}
+
+.button-order:hover {
+  transition-duration: 0.4s;
+  background-color: #fb923c;
+  cursor: pointer;
+}
+
+.intro-right {
+  padding: 0.5rem 0;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  position: relative;
+}
+
+.hero {
+  width: auto;
+  height: 650px;
+  max-width: 100%;
+  margin-left: auto;
+}
+
+.intro-right-content {
+  width: 100%;
+  height: 100%;
+  padding: 1rem 4rem;
+  margin: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  gap: 1rem;
+}
+
+.right-item {
+  width: 190px;
+  padding: 1rem;
+  background-color: rgba(256, 256, 256, 0.4);
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-item img {
+  width: 10rem;
+}
+
+.right-item-name {
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-top: 1rem;
+  opacity: 1;
+  color: rgb(81 81 81);
+}
+
+.right-item-ingredient {
+  font-size: var(--fontSize-item);
+  font-weight: 600;
+  margin: 0.75rem 0rem;
+  opacity: 1;
+  color: rgb(156 160 171);
+}
+
+.right-item-price {
+  color: rgb(46 46 46);
+  font-weight: 600;
+  opacity: 1;
+  font-size: var(--fontSize-item);
+}
+
+.right-item-price span {
+  color: rgb(220 38 38);
+  font-size: var(--fontSize-item);
+}
