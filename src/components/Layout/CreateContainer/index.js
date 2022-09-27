@@ -14,6 +14,8 @@ import {
     uploadBytesResumable
 } from 'firebase/storage';
 import { motion } from 'framer-motion'
+import { faBurger } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import style from './CreateContainer.module.scss'
 import Header from '../Header';
@@ -23,6 +25,8 @@ import { saveItem } from '~/data/firebaseFunction';
 import { getAllFoodItems } from "~/data/firebaseFunction";
 import { actionType } from '~/context/reducer'
 import { useStateValue } from '~/context/StateProvider'
+import productApi from '~/api/productAPI';
+import axios from 'axios';
 
 const cx = classNames.bind(style)
 
@@ -32,104 +36,106 @@ function CreateContainer() {
     const [calories, setCalories] = useState('');
     const [price, setPrice] = useState('');
     const [category, setCategory] = useState(null);
-    const [imageAsset, setImageAsset] = useState(null);
+    const [imageAsset, setImageAsset] = useState();
     const [fields, setFields] = useState(false);
     const [alertStatus, setAlertStatus] = useState('danger');
     const [msg, setMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const uploadImage = (e) => {
-        setIsLoading(true);
-        const imageFile = e.target.files[0];
-        const storageRef = ref(storage, `Image/${Date.now()}-${imageFile.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, imageFile);
+    const handlePreview = (e) => {
+        const file = e.target.files[0];
+        file.preview = URL.createObjectURL(file);
+        setImageAsset(file);
+    }
 
-        uploadTask.on('state_changed', (snapshot) => {
-            const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        }, (error) => {
-            console.log(error);
-            setFields(true);
-            setMsg('Error while uploading: Please try again!');
-            setAlertStatus('danger');
-            setTimeout(() => {
-                setFields(false);
-                setIsLoading(false);
-            }, 5000);
-        }, () => {
-            getDownloadURL(uploadTask.snapshot.ref)
-                .then((downloadURL) => {
-                    setImageAsset(downloadURL);
-                    setIsLoading(false);
-                    setFields(true);
-                    setMsg('Uploaded a photo!');
-                    setAlertStatus('success');
-                    setTimeout(() => {
-                        setFields(false);
-                    }, 5000)
-                })
-        })
-    };
+    useEffect(() => {
+        //Cleanup
+        return () => {
+            imageAsset && URL.revokeObjectURL(imageAsset.preview)
+        }
+    }, [imageAsset])
+
+
 
     const deleteImage = () => {
-        setIsLoading(true);
-        const deleteRef = ref(storage, imageAsset);
-        deleteObject(deleteRef).then(() => {
-            setImageAsset(null);
-            setIsLoading(false);
-            setFields(true);
-            setMsg('Image deleted successfully!');
-            setAlertStatus('success');
-            setTimeout(() => {
-                setFields(false);
-            }, 5000)
-        })
+        setIsLoading(false);
+        setImageAsset();
     }
 
-    const saveDetails = () => {
-        setIsLoading(true);
-        const data = {
-            id: `${Date.now()}`,
-            title: title,
-            imageURL: imageAsset,
-            category: category,
-            calories: calories,
-            quantity: 1,
-            price: price,
-        }
+    const saveData = () => {
+        const formData = new FormData();
+        formData.append("file", imageAsset)
+        formData.append("upload_preset", "uqfyyrfz")
 
-        try {
-            if (!title || !calories || !imageAsset || !price || !category) {
-                setFields(true);
-                setMsg("Required fields can't be empty");
-                setAlertStatus("danger");
-                setTimeout(() => {
-                    setFields(false);
-                    setIsLoading(false);
-                }, 4000);
-            } else {
-                saveItem(data);
-                setIsLoading(false);
-                setFields(true);
-                setMsg('Data uploaded successfully!');
-                setAlertStatus('success');
+        productApi.postImage(formData)
+            .then((res) => {
+                const data = {
+                    title: title,
+                    image: {
+                        url: res.data.url,
+                        public_id: res.data.public_id,
+                    },
+                    category: category,
+                    calories: calories,
+                    quantity: 1,
+                    price: price,
+                }
+                console.log(res);
+                productApi.postProduct(data)
                 clearData();
-                setTimeout(() => {
-                    setFields(false);
-                }, 5000);
-            }
-        } catch (error) {
-            console.log(error);
-            setFields(true);
-            setMsg('Error while uploading: Please try again!');
-            setAlertStatus('danger');
-            setTimeout(() => {
-                setFields(false);
-                setIsLoading(false);
-            }, 5000);
-        }
-
-        fetchData();
+            })
     }
+
+    // const formData = new FormData();
+    // formData.append("hi","hello")
+
+    // console.log(formData);
+
+    // const saveDetails = () => {
+    //     setIsLoading(true);
+    //     const data = {
+    //         id: `${Date.now()}`,
+    //         title: title,
+    //         imageURL: imageAsset,
+    //         category: category,
+    //         calories: calories,
+    //         quantity: 1,
+    //         price: price,
+    //     }
+
+    //     try {
+    //         if (!title || !calories || !imageAsset || !price || !category) {
+    //             setFields(true);
+    //             setMsg("Required fields can't be empty");
+    //             setAlertStatus("danger");
+    //             setTimeout(() => {
+    //                 setFields(false);
+    //                 setIsLoading(false);
+    //             }, 4000);
+    //         } else {
+    //             saveItem(data);
+    //             setIsLoading(false);
+    //             setFields(true);
+    //             setMsg('Data uploaded successfully!');
+    //             setAlertStatus('success');
+    //             clearData();
+    //             setTimeout(() => {
+    //                 setFields(false);
+    //             }, 5000);
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         setFields(true);
+    //         setMsg('Error while uploading: Please try again!');
+    //         setAlertStatus('danger');
+    //         setTimeout(() => {
+    //             setFields(false);
+    //             setIsLoading(false);
+    //         }, 5000);
+    //     }
+
+    //     fetchData();
+    // }
 
     const clearData = () => {
         setTitle("");
@@ -141,18 +147,18 @@ function CreateContainer() {
 
     const [{ foodItems }, dispatch] = useStateValue();
 
-    const fetchData = async () => {
-        await getAllFoodItems().then((data) => {
-            dispatch({
-                type: actionType.SET_FOOD_ITEMS,
-                foodItems: data,
-            });
-        });
-    };
+    // const fetchData = async () => {
+    //     await getAllFoodItems().then((data) => {
+    //         dispatch({
+    //             type: actionType.SET_FOOD_ITEMS,
+    //             foodItems: data,
+    //         });
+    //     });
+    // };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    // useEffect(() => {
+    //     fetchData();
+    // }, []);
     return (
         <div className={cx('wrapper')}>
             <Header />
@@ -175,7 +181,7 @@ function CreateContainer() {
 
 
                 <div className={cx('title')}>
-                    <i class="fa-solid fa-burger"></i>
+                    <FontAwesomeIcon icon={faBurger} />
                     <input
                         type='text'
                         required
@@ -186,7 +192,8 @@ function CreateContainer() {
                 </div>
 
                 <div className={cx('categories')}>
-                    <select onChange={e => setCategory(e.target.value)}>
+                    <select
+                        onChange={e => setCategory(e.target.value)}>
                         <option value='other'>
                             Select Category
                         </option>
@@ -207,16 +214,16 @@ function CreateContainer() {
                         <Fragment>
                             {!imageAsset ? (
                                 <Fragment>
-                                    <label>
+                                    <label className={cx('upload-image')}>
                                         <div className={cx('upload-icon')}>
                                             <CloudUploadOutlined />
                                             <p>Click here to upload</p>
                                         </div>
                                         <input
                                             type='file'
-                                            name='uploadimage'
+                                            name='uploadImage'
                                             accept='image/*'
-                                            onChange={uploadImage}
+                                            onChange={handlePreview}
                                         />
                                     </label>
                                 </Fragment>
@@ -224,7 +231,7 @@ function CreateContainer() {
                                 <Fragment>
                                     <div className={cx('uploaded')}>
                                         <img
-                                            src={imageAsset}
+                                            src={imageAsset.preview}
                                             alt='uploaded'
                                         />
                                         <button
@@ -268,7 +275,7 @@ function CreateContainer() {
 
                 <div className={cx('save')}>
                     <button
-                        onClick={saveDetails}>
+                        onClick={saveData}>
                         Save
                     </button>
                 </div>

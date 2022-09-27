@@ -17,6 +17,7 @@ function HomeContainer({ data }) {
 
 
     const [{ foodItems, cartShow }, dispatch] = useStateValue();
+
     const [scrollValue, setScrollvalue] = useState(0);
     useEffect(() => { }, [scrollValue, cartShow]);
     return (<div className={cx('wrapper')}>

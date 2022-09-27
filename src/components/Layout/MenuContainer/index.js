@@ -13,7 +13,7 @@ import RowContainer from '../RowContainer'
 const cx = classNames.bind(style);
 
 
-function MenuContainer() {
+function MenuContainer({ data }) {
 
     const [filter, setFilter] = useState("chicken");
     const [{ foodItems }, dispatch] = useStateValue();

@@ -1,13 +1,15 @@
 
 import Home from "../pages/Home";
-import Market from "../pages/Market";
+import Menu from "../pages/Menu";
 import Create from "~/pages/Create";
 import CreateContainer from "~/components/Layout/CreateContainer";
+import ModifyContainer from "~/components/Layout/ModifyContainer";
 
 const publicRoutes = [
     { path: '/', component: Home },
-    { path: '/market', component: Market },
-    { path: '/create', component: Create, layout: CreateContainer },
+    { path: '/menu', component: Menu, layout: Menu },
+    { path: '/create', component: CreateContainer, layout: CreateContainer },
+    { path: '/modify', component: ModifyContainer, layout: ModifyContainer },
 ]
 
 const privateRoutes = []

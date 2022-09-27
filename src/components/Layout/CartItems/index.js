@@ -65,7 +65,7 @@ function CartItems({ item, flag, setFlag }) {
             className={cx('items')}
         >
             <img
-                src={item?.imageURL}
+                src={item?.image?.url}
                 alt=""
             />
             <div className={cx('info')}>

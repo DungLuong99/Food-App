@@ -2,11 +2,15 @@ import classNames from 'classnames/bind'
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 
 import style from './RowContainer.module.scss'
 import { useStateValue } from '~/context/StateProvider';
 import { actionType } from '~/context/reducer';
 import NotFound from '~/assets/img/NotFound.svg'
+import axios from 'axios';
+import productApi from '~/api/productAPI';
 
 const cx = classNames.bind(style);
 
@@ -26,11 +30,28 @@ function RowContainer({ flag, data, scrollValue }) {
     // console.log(items);
     useEffect(() => { addtoCart(); }, [items]);
 
+    const deleteProduct = (id, index) => {
+        const deletePr = async () => {
+            try {
+                await productApi.deleteProduct(id);
+                dispatch({
+                    type: actionType.DELETE_ITEMS,
+                    payload: index
+                })
+            }
+            catch (error) {
+                console.log('Fail to fetch product: ', error);
+            }
+        }
+        deletePr();
+
+    }
+
     return (
         <div
             className={cx('item-container')}>
             {data && data.length > 0 ? (
-                data.map((item) => (
+                data.map((item, index) => (
                     <div
                         key={item?.id}
                         className={cx('item-inner')}
@@ -39,16 +60,25 @@ function RowContainer({ flag, data, scrollValue }) {
                             className={cx('item-image')}
                         >
                             <motion.img
-                                src={item?.imageURL}
+                                src={item?.image?.url}
                                 alt=''
                                 whileHover={{ scale: 1.2 }}
                             />
-                            <motion.div
-                                className={cx('add-to-cart')}
-                                whileTap={{ scale: 0.5 }}
-                                onClick={() => setItems([...cartItems, item])}>
-                                <ShoppingCartOutlined />
-                            </motion.div>
+                            <div className={cx('item-icon')}>
+                                <button
+                                    className={cx('item-icon-custom')}
+                                    onClick={() => deleteProduct(item.id, index)}
+                                >
+                                    <FontAwesomeIcon icon={faEllipsis} />
+                                </button>
+
+                                <motion.div
+                                    className={cx('add-to-cart')}
+                                    whileTap={{ scale: 0.5 }}
+                                    onClick={() => setItems([...cartItems, item])}>
+                                    <ShoppingCartOutlined />
+                                </motion.div>
+                            </div>
                         </div>
 
                         <div className={cx('item-content')}>

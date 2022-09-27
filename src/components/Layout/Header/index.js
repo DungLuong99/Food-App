@@ -20,26 +20,26 @@ const cx = classNames.bind(style)
 
 function Header() {
 
-    const firebaseAuth = getAuth(app);
+    // const firebaseAuth = getAuth(app);
 
-    const provider = new GoogleAuthProvider();
+    // const provider = new GoogleAuthProvider();
 
     const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
 
-    const [menu, setMenu] = useState(false)
+    const [menu, setMenu] = useState(true)
 
-    const login = async () => {
-        if (!user) {
-            const { user: { refreshToken, providerData } } = await signInWithPopup(firebaseAuth, provider);
-            dispatch({
-                type: actionType.SET_USER,
-                user: providerData[0]
-            });
-            localStorage.setItem('user', JSON.stringify(providerData[0]));
-        } else {
-            setMenu(!menu);
-        }
-    }
+    // const login = async () => {
+    //     if (!user) {
+    //         const { user: { refreshToken, providerData } } = await signInWithPopup(firebaseAuth, provider);
+    //         dispatch({
+    //             type: actionType.SET_USER,
+    //             user: providerData[0]
+    //         });
+    //         localStorage.setItem('user', JSON.stringify(providerData[0]));
+    //     } else {
+    //         setMenu(!menu);
+    //     }
+    // }
 
     const logout = () => {
         setMenu(false);
@@ -70,9 +70,9 @@ function Header() {
                 <div className={cx('content')}>
 
                     <motion.ul className={cx('nav-list')}>
-                        <li>Home</li>
-                        <li>Menu</li>
-                        <li>About Us</li>
+                        <Link to={'/'}>Home</Link>
+                        <Link to={'/menu'}>Menu</Link>
+                        <Link to={'/about_us'}>About Us</Link>
                         <li>Service</li>
                     </motion.ul>
 
@@ -92,18 +92,21 @@ function Header() {
                         <motion.img
                             whileTap={{ scale: 0.6 }}
                             src={user ? user.photoURL : Avatar}
-                            onClick={login}
+                            // onClick={login}
                             alt='userprofile'
                         />
                         <div>
 
                             {menu && (
                                 <motion.div className={cx('user-after-login')}>
-                                    {user && user.email === 'dunglt2301@gmail.com' && (
-                                        <Link to={'/create'}>
-                                            <p>New Item <AppstoreAddOutlined /></p>
-                                        </Link>
-                                    )}
+
+                                    <Link to={'/create'}>
+                                        <p>New Item <AppstoreAddOutlined /></p>
+                                    </Link>
+                                    <Link to={'/modify'}>
+                                        <p>Modify <AppstoreAddOutlined /></p>
+                                    </Link>
+
                                     <p onClick={logout}
                                     >
                                         Logout <LogoutOutlined />
@@ -142,7 +145,7 @@ function Header() {
                     <motion.img
                         whileTap={{ scale: 0.6 }}
                         src={user ? user.photoURL : Avatar}
-                        onClick={login}
+                        // onClick={login}
                         alt='userprofile'
                     />
 

@@ -16,6 +16,7 @@ $bg-color: rgba(256, 256, 256, 0.4);
   border-radius: 1.5rem;
   background-color: $bg-color;
   cursor: pointer;
+  position: relative;
 }
 
 .item-image {
@@ -35,6 +36,18 @@ $bg-color: rgba(256, 256, 256, 0.4);
 
 .item-image img :hover {
   transform: scale(1.5);
+}
+
+.item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-icon-custom {
+  position: absolute;
+  top: 0;
+  cursor: pointer;
 }
 
 .add-to-cart {
