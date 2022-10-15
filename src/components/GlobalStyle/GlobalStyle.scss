@@ -25,3 +25,15 @@ a[href] {
   color: var(--text-color);
   text-decoration: none;
 }
+
+p,
+ul {
+  margin: 0;
+}
+
+button,
+input,
+[tabindex] {
+  outline: none;
+  border: none;
+}

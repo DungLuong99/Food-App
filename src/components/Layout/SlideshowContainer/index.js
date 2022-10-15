@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useStateValue } from '~/context/StateProvider';
 import style from './SlideshowContainer.module.scss';
 import RowContainer from '../RowContainer';
+import { useEffect } from 'react';
 
 const cx = classNames.bind(style);
 
@@ -13,6 +14,8 @@ function SlideshowContainer() {
 
     const [{ foodItems }, dispatch] = useStateValue();
     const [scrollValue, setScrollValue] = useState(0);
+    useEffect(() => { },
+        [scrollValue])
 
     return (
         <div className={cx('slide-show')}>
@@ -40,6 +43,7 @@ function SlideshowContainer() {
 
             <div className={cx('slide-content')}>
                 <RowContainer
+                    flag={true}
                     data={foodItems?.filter((n) => n.category === 'fruits')}
                     scrollValue={scrollValue}
                 />

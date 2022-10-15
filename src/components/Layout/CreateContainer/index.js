@@ -7,12 +7,7 @@ import {
     DollarCircleOutlined
 } from '@ant-design/icons';
 import classNames from 'classnames/bind'
-import {
-    deleteObject,
-    getDownloadURL,
-    ref,
-    uploadBytesResumable
-} from 'firebase/storage';
+
 import { motion } from 'framer-motion'
 import { faBurger } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,28 +15,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import style from './CreateContainer.module.scss'
 import Header from '../Header';
 import { categories } from '~/data/introItems';
-import { storage } from '~/firebase.config';
-import { saveItem } from '~/data/firebaseFunction';
-import { getAllFoodItems } from "~/data/firebaseFunction";
-import { actionType } from '~/context/reducer'
+
 import { useStateValue } from '~/context/StateProvider'
 import productApi from '~/api/productAPI';
 import axios from 'axios';
 
 const cx = classNames.bind(style)
 
-function CreateContainer() {
+function CreateContainer(data) {
 
-    const [title, setTitle] = useState('');
-    const [calories, setCalories] = useState('');
-    const [price, setPrice] = useState('');
-    const [category, setCategory] = useState(null);
-    const [imageAsset, setImageAsset] = useState();
+    const [title, setTitle] = useState(data.title || '');
+    const [calories, setCalories] = useState(data.calories || '');
+    const [price, setPrice] = useState(data.price || '');
+    const [category, setCategory] = useState(data.category || null);
+    const [imageAsset, setImageAsset] = useState(data.image?.imageURL || undefined);
     const [fields, setFields] = useState(false);
     const [alertStatus, setAlertStatus] = useState('danger');
     const [msg, setMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log(imageAsset);
     const handlePreview = (e) => {
         const file = e.target.files[0];
         file.preview = URL.createObjectURL(file);
@@ -72,7 +65,7 @@ function CreateContainer() {
                 const data = {
                     title: title,
                     image: {
-                        url: res.data.url,
+                        imageURL: res.data.url,
                         public_id: res.data.public_id,
                     },
                     category: category,

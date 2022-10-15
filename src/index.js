@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import 'antd/dist/antd.css';
 import App from './App';
 import GlobalStyle from '~/components/GlobalStyle';
 import reportWebVitals from './reportWebVitals';
 import { StateProvider } from './context/StateProvider';
+import { initialState } from "./context/initialState";
+import reducer from "./context/reducer";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <StateProvider>
+    <StateProvider initialState={initialState} reducer={reducer}>
       <GlobalStyle>
         <App />
       </GlobalStyle>

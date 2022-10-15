@@ -3,10 +3,11 @@ import {
     ShoppingCartOutlined, AppstoreAddOutlined, LogoutOutlined,
     HomeOutlined, BookOutlined, InfoCircleOutlined, CustomerServiceOutlined
 } from '@ant-design/icons'
-import { motion } from 'framer-motion'
+import { calcLength, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useState } from 'react';
+import jwt_decode from "jwt-decode";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 import style from './Header.module.scss'
 import Logo from '~/assets/img/logo.png'
@@ -20,26 +21,28 @@ const cx = classNames.bind(style)
 
 function Header() {
 
-    // const firebaseAuth = getAuth(app);
+    const firebaseAuth = getAuth(app);
 
-    // const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
 
     const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
 
-    const [menu, setMenu] = useState(true)
+    const [menu, setMenu] = useState(false)
 
-    // const login = async () => {
-    //     if (!user) {
-    //         const { user: { refreshToken, providerData } } = await signInWithPopup(firebaseAuth, provider);
-    //         dispatch({
-    //             type: actionType.SET_USER,
-    //             user: providerData[0]
-    //         });
-    //         localStorage.setItem('user', JSON.stringify(providerData[0]));
-    //     } else {
-    //         setMenu(!menu);
-    //     }
-    // }
+    const login = async () => {
+
+        if (!user) {
+            const { user: { refreshToken, providerData } } = await signInWithPopup(firebaseAuth, provider);
+            dispatch({
+                type: actionType.SET_USER,
+                user: providerData[0]
+            });
+            localStorage.setItem('user', JSON.stringify(providerData[0]));
+        } else {
+            setMenu(!menu);
+        }
+
+    }
 
     const logout = () => {
         setMenu(false);
@@ -73,7 +76,7 @@ function Header() {
                         <Link to={'/'}>Home</Link>
                         <Link to={'/menu'}>Menu</Link>
                         <Link to={'/about_us'}>About Us</Link>
-                        <li>Service</li>
+                        <Link to={'/service'}>Service</Link>
                     </motion.ul>
 
                     <div className={cx('cart')}
@@ -81,7 +84,6 @@ function Header() {
                     >
                         <ShoppingCartOutlined />
                         {cartItems && cartItems.length > 0 && (
-
                             <div className={cx('cart-content')}>
                                 <p>{cartItems.length}</p>
                             </div>
@@ -91,8 +93,9 @@ function Header() {
                     <div className={cx('user')}>
                         <motion.img
                             whileTap={{ scale: 0.6 }}
-                            src={user ? user.photoURL : Avatar}
-                            // onClick={login}
+                            src={user ? user.photoURL
+                                : Avatar}
+                            onClick={() => login()}
                             alt='userprofile'
                         />
                         <div>

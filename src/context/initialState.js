@@ -8,6 +8,7 @@ const initialState = {
     foodItems: null,
     cartShow: false,
     cartItems: cartInfo,
+    modifyItemsShow: false,
 }
 
 export { initialState }

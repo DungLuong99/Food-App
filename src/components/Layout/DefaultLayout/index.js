@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind'
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import jwt_decode from "jwt-decode";
 
 import style from './DefaultLayout.module.scss'
 import Header from "~/components/Layout/Header";
@@ -10,12 +11,12 @@ import { getAllFoodItems } from "~/data/firebaseFunction";
 import { useStateValue } from '~/context/StateProvider';
 import CartContainer from '../CartContainer';
 import productApi from '~/api/productAPI';
+import Footer from '~/components/Layout/Footer'
 
 const cx = classNames.bind(style)
 
-function DefaultLayout({ children }) {
+function DefaultLayout({ children, data }) {
     // const [foodItems, setFoodItems] = useState([]);
-    const [{ foodItems, cartShow }, dispatch] = useStateValue();
 
     // const fetchData = async () => {
     //     await getAllFoodItems().then((data) => {
@@ -28,24 +29,25 @@ function DefaultLayout({ children }) {
     // }
     // useEffect(() => { fetchData() }, []);
 
+    const [{ foodItems, cartShow }, dispatch] = useStateValue();
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await productApi.getAll();
-                // console.log(response);
-                dispatch({
-                    type: actionType.SET_FOOD_ITEMS,
-                    foodItems: response,
-                })
-            }
-            catch (error) {
-                console.log('Fail to fetch product: ', error);
-            }
-        }
+    console.log(foodItems);
+    // useEffect(() => {
+    //     const fetchProducts = async () => {
+    //         try {
+    //             const response = await productApi.getAll();
+    //             dispatch({
+    //                 type: actionType.SET_FOOD_ITEMS,
+    //                 foodItems: response,
+    //             })
+    //         }
+    //         catch (error) {
+    //             console.log('Fail to fetch product: ', error);
+    //         }
+    //     }
 
-        fetchProducts();
-    }, [])
+    //     fetchProducts();
+    // }, [])
 
 
     return (
@@ -53,11 +55,12 @@ function DefaultLayout({ children }) {
 
             <div className={cx('wrapper')}>
                 <Header />
+
                 <div className={cx('container')}>
                     <HomeContainer data={foodItems} />
                     {children}
                 </div>
-
+                <Footer />
             </div>
 
         </AnimatePresence>

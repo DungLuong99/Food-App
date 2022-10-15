@@ -13,7 +13,7 @@ import RowContainer from '../RowContainer'
 const cx = classNames.bind(style);
 
 
-function MenuContainer({ data }) {
+function MenuContainer() {
 
     const [filter, setFilter] = useState("chicken");
     const [{ foodItems }, dispatch] = useStateValue();
@@ -32,7 +32,9 @@ function MenuContainer({ data }) {
                 {categories?.map((category) => (
                     <motion.div
                         key={category.id}
-                        className={cx('category')}
+                        className={cx(filter === category.urlParamName
+                            ? 'category-selected'
+                            : 'category')}
                         whileTap={{ scale: 1.5 }}
                         onClick={() =>
                             setFilter(category.urlParamName)

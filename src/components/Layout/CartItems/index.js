@@ -17,15 +17,18 @@ let items = [];
 function CartItems({ item, flag, setFlag }) {
 
     const [quantity, setQuantity] = useState(item.quantity);
-    const [{ cartItems }, dispatch] = useStateValue();
+    const [{ cartItems, user }, dispatch] = useStateValue();
 
+    console.log(user);
     const cartDispatch = () => {
+
         localStorage.setItem("cartItems", JSON.stringify(items));
         dispatch({
             type: actionType.SET_CART_ITEMS,
             cartItems: items,
         })
     }
+
     const updateQuantity = (action, id) => {
 
         if (action === "add") {
@@ -65,11 +68,11 @@ function CartItems({ item, flag, setFlag }) {
             className={cx('items')}
         >
             <img
-                src={item?.image?.url}
+                src={item?.image?.imageURL}
                 alt=""
             />
             <div className={cx('info')}>
-                <p className={cx('info-name')}>{item?.title}</p>
+                <p className={cx('info-name')}>{item?.name}</p>
                 <p className={cx('info-price')}>${(item?.price) * quantity}</p>
             </div>
             <div className={cx('quantity')}>

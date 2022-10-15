@@ -22,5 +22,9 @@ const productApi = {
         const url = '/products';
         return axiosClient.delete(`${url}/${id}`);
     },
+    putProduct: (id, params) => {
+        const url = '/products';
+        return axiosClient.put(`${url}/${id}`, params);
+    },
 }
 export default productApi;

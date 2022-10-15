@@ -4,6 +4,7 @@ import Menu from "../pages/Menu";
 import Create from "~/pages/Create";
 import CreateContainer from "~/components/Layout/CreateContainer";
 import ModifyContainer from "~/components/Layout/ModifyContainer";
+import MenuContainer from "~/components/Layout/MenuContainer";
 
 const publicRoutes = [
     { path: '/', component: Home },

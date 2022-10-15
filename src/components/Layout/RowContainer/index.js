@@ -3,7 +3,7 @@ import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
+import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons'
 
 import style from './RowContainer.module.scss'
 import { useStateValue } from '~/context/StateProvider';
@@ -11,13 +11,19 @@ import { actionType } from '~/context/reducer';
 import NotFound from '~/assets/img/NotFound.svg'
 import axios from 'axios';
 import productApi from '~/api/productAPI';
+import CreateContainer from '../CreateContainer';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 
 function RowContainer({ flag, data, scrollValue }) {
-    const [{ cartItems }, dispatch] = useStateValue();
+    const [{ cartItems, modifyItemsShow }, dispatch] = useStateValue();
     const [items, setItems] = useState([]);
 
+    const rowContainer = useRef();
+    useEffect(() => {
+        rowContainer.current.scrollLeft += scrollValue;
+    }, [scrollValue]);
 
     const addtoCart = () => {
         dispatch({
@@ -27,10 +33,22 @@ function RowContainer({ flag, data, scrollValue }) {
         localStorage.setItem("cartItems", JSON.stringify(items));
     };
 
-    // console.log(items);
+    const showModifyItem = () => {
+        dispatch({
+            type: actionType.SET_MODIFY_ITEMS_SHOW,
+            modifyItemsShow: !modifyItemsShow,
+        })
+        console.log(modifyItemsShow);
+    }
+
+    const modifyProduct = (data) => {
+        <CreateContainer data={data} />
+    }
+
     useEffect(() => { addtoCart(); }, [items]);
 
     const deleteProduct = (id, index) => {
+        console.log(id, index);
         const deletePr = async () => {
             try {
                 await productApi.deleteProduct(id);
@@ -49,7 +67,8 @@ function RowContainer({ flag, data, scrollValue }) {
 
     return (
         <div
-            className={cx('item-container')}>
+            ref={rowContainer}
+            className={cx(flag ? 'item-row' : 'item-colum')}>
             {data && data.length > 0 ? (
                 data.map((item, index) => (
                     <div
@@ -60,17 +79,24 @@ function RowContainer({ flag, data, scrollValue }) {
                             className={cx('item-image')}
                         >
                             <motion.img
-                                src={item?.image?.url}
+                                src={item?.image?.imageURL}
                                 alt=''
                                 whileHover={{ scale: 1.2 }}
                             />
                             <div className={cx('item-icon')}>
-                                <button
+                                {/* <motion.div
                                     className={cx('item-icon-custom')}
-                                    onClick={() => deleteProduct(item.id, index)}
+                                    onClick={showModifyItem}
                                 >
-                                    <FontAwesomeIcon icon={faEllipsis} />
-                                </button>
+                                    {modifyItemsShow ? (
+                                        <div>
+                                            <p onClick={modifyProduct(item)}>Modify</p>
+                                            <p onClick={() => deleteProduct(item.id, index)}>
+                                                Delete</p>
+                                        </div>) : (
+                                        <FontAwesomeIcon icon={faScrewdriverWrench} />
+                                    )}
+                                </motion.div> */}
 
                                 <motion.div
                                     className={cx('add-to-cart')}
@@ -82,7 +108,7 @@ function RowContainer({ flag, data, scrollValue }) {
                         </div>
 
                         <div className={cx('item-content')}>
-                            <p className={cx('item-name')}>{item.title}</p>
+                            <p className={cx('item-name')}>{item.name}</p>
                             <p className={cx('item-calories')}>{item.calories} Calories</p>
                             <div className={cx('item-price')}>
                                 <p>
