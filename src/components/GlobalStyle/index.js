@@ -1,5 +1,5 @@
-import './GlobalStyle.scss'
 import './Grid.scss'
+import './GlobalStyle.scss'
 
 function GlobalStyle({ children }) {
     return (children);

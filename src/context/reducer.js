@@ -4,11 +4,13 @@ const actionType = {
     SET_CART_SHOW: 'SET_CART_SHOW',
     SET_CART_ITEMS: 'SET_CART_ITEM',
     DELETE_ITEMS: ' DELETE_ITEMS',
-    SET_MODIFY_ITEMS_SHOW: 'SET_MODIFY_ITEMS_SHOW'
+    SET_MODIFY_ITEMS_SHOW: 'SET_MODIFY_ITEMS_SHOW',
+    SET_SEARCH_RESULT: 'SET_SEARCH_RESULT',
+    SET_SORT_STATE: 'SET_SORT_STATE'
 };
 
 const reducer = (state, action) => {
-    // console.log(state, action);
+    console.log(state, action);
     switch (action.type) {
         case actionType.SET_USER:
             return {
@@ -34,7 +36,6 @@ const reducer = (state, action) => {
         case actionType.DELETE_ITEMS:
             const newItems = [...state.foodItems];
             newItems.splice(action.payload, 1);
-            console.log(newItems);
             return {
                 ...state,
                 foodItems: newItems
@@ -43,6 +44,16 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 modifyItemsShow: action.modifyItemsShow,
+            };
+        case actionType.SET_SEARCH_RESULT:
+            return {
+                ...state,
+                searchResult: action.searchResult,
+            };
+        case actionType.SET_SORT_STATE:
+            return {
+                ...state,
+                sortResult: action.sortResult,
             };
         default:
             return state

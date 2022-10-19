@@ -16,9 +16,10 @@ import CartItems from '../CartItems';
 const cx = classNames.bind(style)
 
 function CartContainer() {
-    const [{ cartShow, cartItems }, dispatch] = useStateValue();
+    const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
     const [flag, setFlag] = useState(1);
     const [total, setTotal] = useState(0);
+    console.log(cartItems);
 
     const showCart = () => {
         dispatch({
@@ -87,8 +88,14 @@ function CartContainer() {
                             <p >Total</p>
                             <p >${total + 2.5}</p>
                         </div>
-                        <button className={cx('button-checkout')}>
-                            Login to check out</button>
+                        {user ? (
+                            <button className={cx('button-checkout')}>
+                                Check out</button>
+                        ) : (
+
+                            <button className={cx('button-checkout')}>
+                                Login to check out</button>
+                        )}
                     </div>
                 </div>) :
                 (

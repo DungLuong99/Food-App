@@ -5,7 +5,7 @@ import { faBowlFood } from '@fortawesome/free-solid-svg-icons'
 import style from './MenuContainer.module.scss'
 import { categories } from '~/data/introItems'
 import { useStateValue } from '~/context/StateProvider';
-import { } from '@fortawesome/free-solid-svg-icons'
+// import { } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import RowContainer from '../RowContainer'
@@ -13,14 +13,36 @@ import RowContainer from '../RowContainer'
 const cx = classNames.bind(style);
 
 
-function MenuContainer() {
+function MenuContainer({ data }) {
 
     const [filter, setFilter] = useState("chicken");
-    const [{ foodItems }, dispatch] = useStateValue();
+    const [{ foodItems, sortState }, dispatch] = useStateValue();
+    // console.log(data);
+    const [dataSorted, setDataSorted] = useState();
 
-    const currentFilter = () => {
 
-    }
+    // console.log(dataSorted);
+
+    // if (sortState === null) {
+    //     setDataSorted(data)
+    // } else {
+    //     data.map((a, b) => { console.log(a, b); })
+    //     // data.sort((a, b) => {
+    //     //     const { price, updateAt } = a;
+    //     //     const { price: priceB, updateAt: updateAtB } = b;
+    //     //     console.log(a, b);
+    //     //     switch (sortState) {
+    //     //         case 'priceDesc':
+    //     //             return priceB - price;
+    //     //         case 'priceAsc':
+    //     //             return price - priceB;
+    //     //         case null:
+    //     //             return data;
+    //     //         default:
+    //     //             return data
+    //     //     }
+    //     // })
+    // }
 
     return (<div className={cx('wrapper')}>
         <p className={cx('title')} >
@@ -53,7 +75,7 @@ function MenuContainer() {
         </div>
         <div className={cx('category-items')}>
             <RowContainer
-                data={foodItems?.filter((item) => item.category === filter)}
+                data={data?.filter((item) => item.category === filter)}
             />
         </div>
 

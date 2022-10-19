@@ -10,7 +10,8 @@ import CartContainer from '~/components/Layout/CartContainer'
 const cx = classNames.bind(style);
 
 function Menu() {
-    const [{ foodItems, cartItems, cartShow }, dispatch] = useStateValue();
+    const [{ foodItems, searchResult, cartShow, sortResult }, dispatch] = useStateValue();
+    // console.log(sortResult);
 
     return (
 
@@ -21,7 +22,7 @@ function Menu() {
                     <SideBar />
                 </div>
                 <div>
-                    <MenuContainer />
+                    <MenuContainer data={searchResult || foodItems} />
                     {cartShow && <CartContainer />}
 
                 </div>

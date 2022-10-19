@@ -19,7 +19,6 @@ function CartItems({ item, flag, setFlag }) {
     const [quantity, setQuantity] = useState(item.quantity);
     const [{ cartItems, user }, dispatch] = useStateValue();
 
-    console.log(user);
     const cartDispatch = () => {
 
         localStorage.setItem("cartItems", JSON.stringify(items));

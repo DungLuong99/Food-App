@@ -24,7 +24,7 @@ function App() {
     }
     fetchProducts().then(
       response => {
-        console.log(response);
+        // console.log(response);
         dispatch({
           type: actionType.SET_FOOD_ITEMS,
           foodItems: response,
@@ -35,37 +35,30 @@ function App() {
 
   return (
     <Router>
-      <StateProvider
-        initialState={initialState}
-        reducer={reducer}
-      >
+      <div className="App">
+        <Routes>
+          {publicRoutes.map((route, index) => {
+            const Page = route.component;
+            let Layout = DefaultLayout;
 
-        <div className="App">
-          <Routes>
-            {publicRoutes.map((route, index) => {
-              const Page = route.component;
-              let Layout = DefaultLayout;
+            if (route.layout) {
+              Layout = route.layout
+            } else if (route.layout === null) {
+              Layout = Fragment
+            }
 
-              if (route.layout) {
-                Layout = route.layout
-              } else if (route.layout === null) {
-                Layout = Fragment
-              }
+            return <Route
+              key={index}
+              path={route.path}
+              element={
+                <Layout >
+                  <Page />
+                </Layout>
+              } />
 
-              return <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Layout >
-                    <Page />
-                  </Layout>
-                } />
-
-            })}
-          </Routes>
-        </div>
-
-      </StateProvider>
+          })}
+        </Routes>
+      </div>
     </Router>
   );
 }

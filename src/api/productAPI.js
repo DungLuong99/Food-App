@@ -26,5 +26,9 @@ const productApi = {
         const url = '/products';
         return axiosClient.put(`${url}/${id}`, params);
     },
+    searchProducts: (debounced) => {
+        const url = `/products?q=${encodeURIComponent(debounced)}`;
+        return axiosClient.get(url);
+    },
 }
 export default productApi;

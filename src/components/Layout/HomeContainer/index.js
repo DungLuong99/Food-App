@@ -71,7 +71,7 @@ function HomeContainer({ data }) {
 
         </div>
         <SlideshowContainer />
-        <MenuContainer />
+        <MenuContainer data={foodItems} />
         {cartShow && <CartContainer />}
 
 

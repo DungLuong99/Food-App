@@ -163,3 +163,13 @@
   color: rgb(220 38 38);
   font-size: var(--fontSize-item);
 }
+
+@media screen and (max-width: 740px) {
+  .intro-left-title {
+    font-size: 2.5rem;
+
+    span {
+      font-size: 3rem;
+    }
+  }
+}

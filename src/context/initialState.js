@@ -9,6 +9,8 @@ const initialState = {
     cartShow: false,
     cartItems: cartInfo,
     modifyItemsShow: false,
+    searchResult: null,
+    sortState: null,
 }
 
 export { initialState }

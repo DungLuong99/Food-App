@@ -31,7 +31,7 @@ function DefaultLayout({ children, data }) {
 
     const [{ foodItems, cartShow }, dispatch] = useStateValue();
 
-    console.log(foodItems);
+    // console.log(foodItems);
     // useEffect(() => {
     //     const fetchProducts = async () => {
     //         try {
