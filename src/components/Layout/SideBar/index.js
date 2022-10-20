@@ -21,6 +21,7 @@ function SideBar() {
             <Select
                 onChange={(e) => {
                     const sortBy = e.target.value;
+                    console.log(sortBy);
                     dispatch({
                         type: actionType.SET_SORT_STATE,
                         sortState: sortBy

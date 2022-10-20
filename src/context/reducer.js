@@ -10,7 +10,7 @@ const actionType = {
 };
 
 const reducer = (state, action) => {
-    console.log(state, action);
+    // console.log(state, action);
     switch (action.type) {
         case actionType.SET_USER:
             return {
@@ -53,7 +53,7 @@ const reducer = (state, action) => {
         case actionType.SET_SORT_STATE:
             return {
                 ...state,
-                sortResult: action.sortResult,
+                sortState: action.sortState,
             };
         default:
             return state

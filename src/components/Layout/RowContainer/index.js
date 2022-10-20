@@ -20,6 +20,8 @@ function RowContainer({ flag, data, scrollValue }) {
     const [{ cartItems, modifyItemsShow }, dispatch] = useStateValue();
     const [items, setItems] = useState([]);
 
+    console.log("data", data);
+
     const rowContainer = useRef();
     useEffect(() => {
         rowContainer.current.scrollLeft += scrollValue;
@@ -38,7 +40,7 @@ function RowContainer({ flag, data, scrollValue }) {
             type: actionType.SET_MODIFY_ITEMS_SHOW,
             modifyItemsShow: !modifyItemsShow,
         })
-        console.log(modifyItemsShow);
+        // console.log(modifyItemsShow);
     }
 
     const modifyProduct = (data) => {
