@@ -118,6 +118,10 @@ $wrapper-bg: #e78383;
     display: none;
   }
 
+  .modify {
+    display: none;
+  }
+
   .mobile {
     display: flex;
     align-items: center;
@@ -136,11 +140,26 @@ $wrapper-bg: #e78383;
     list-style-type: none;
   }
 
-  .mobile-nav-list li {
-    padding: 2px 6px;
+  .mobile-nav-list {
+    padding: 0px 6px;
   }
 
   .user-after-login {
     right: -26px;
+  }
+
+  .mobile-cart {
+    position: relative;
+
+    .icon-cart {
+      font-size: 1.25rem;
+    }
+
+    .mobile-cart-content {
+      position: absolute;
+      top: -15px;
+      right: 18%;
+      font-weight: 600;
+    }
   }
 }

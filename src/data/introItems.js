@@ -87,7 +87,7 @@ const categories = [
     {
         id: 7,
         name: "Soft Drinks",
-        urlParamName: "drinks",
+        urlParamName: "drink",
         icon: <FontAwesomeIcon icon={faBottleDroplet} />,
     },
 ];

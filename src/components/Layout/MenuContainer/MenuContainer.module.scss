@@ -115,3 +115,29 @@ $cl-title: rgb(41 41 41);
 .category-items {
   width: 100%;
 }
+
+@media screen and (max-width: 740px) {
+  .filter-category {
+    justify-content: flex-start;
+    overflow-x: scroll;
+    scrollbar-width: 0px;
+    --ms-overflow-style: none;
+  }
+
+  .filter-category::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (min-width: 741px) and (max-width: 1024px) {
+  .filter-category {
+    justify-content: flex-start;
+    overflow-x: scroll;
+    scrollbar-width: 0px;
+    --ms-overflow-style: none;
+  }
+
+  .filter-category::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,12 +1,12 @@
 import classNames from 'classnames/bind'
 
-import style from './About_us.module.scss'
+import style from './Service.module.scss'
 import Coming from '~/assets/img/coming.png'
 import { Header } from '~/components/Layout';
 
 const cx = classNames.bind(style);
 
-function About_us() {
+function Service() {
     return (<div>
         <Header />
         <img
@@ -17,4 +17,4 @@ function About_us() {
     </div>);
 }
 
-export default About_us;
+export default Service;

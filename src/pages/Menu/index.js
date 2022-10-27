@@ -6,19 +6,20 @@ import MenuContainer from "~/components/Layout/MenuContainer";
 import SideBar from "~/components/Layout/SideBar";
 import { useStateValue } from '~/context/StateProvider'
 import CartContainer from '~/components/Layout/CartContainer'
+import Footer from '~/components/Layout/Footer';
 
 const cx = classNames.bind(style);
 
 function Menu() {
     const [{ foodItems, searchResult, cartShow, sortResult }, dispatch] = useStateValue();
-    // console.log(sortResult);
+    // console.log(foodItems);
 
     return (
 
-        <div>
+        <div className={cx('wrapper')}>
             <Header />
-            <div className={cx('wrapper')}>
-                <div>
+            <div className={cx('inner')}>
+                <div className={cx('sidebar')}>
                     <SideBar />
                 </div>
                 <div>
@@ -27,6 +28,7 @@ function Menu() {
 
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

@@ -1,5 +1,5 @@
 $search-border-radius: 92px;
-$search-height: 46px;
+$search-height: 32px;
 $search-top-spacer: 9px;
 $search-btn-width: 36px;
 $second-color: #fe2c55;
@@ -51,6 +51,11 @@ $second-color: #fe2c55;
 
   &:focus-within {
     border-color: rgba(22, 24, 35, 0.2);
+  }
+
+  button {
+    outline: none;
+    border: none;
   }
 }
 

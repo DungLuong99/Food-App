@@ -11,3 +11,15 @@
   width: 100%;
   padding: 1rem 4rem;
 }
+
+@media screen and (max-width: 740px) {
+  .container {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 741px) and (max-width: 1024px) {
+  .container {
+    padding: 1rem;
+  }
+}
