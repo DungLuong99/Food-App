@@ -19,7 +19,6 @@ function CartContainer() {
     const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
     const [flag, setFlag] = useState(1);
     const [total, setTotal] = useState(0);
-    console.log(cartItems);
 
     const showCart = () => {
         dispatch({
