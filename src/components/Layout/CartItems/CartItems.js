@@ -23,8 +23,8 @@ function CartItems({ item, flag, setFlag }) {
 
         localStorage.setItem("cartItems", JSON.stringify(items));
         dispatch({
-            type: actionType.SET_CART_ITEMS,
-            cartItems: items,
+            type: actionType.CHANGE_QUANTITY,
+            quantity: items,
         })
     }
 
@@ -38,6 +38,7 @@ function CartItems({ item, flag, setFlag }) {
                     setFlag(flag + 1);
                 }
             });
+            items = cartItems
             cartDispatch();
         } else {
             // initial state value is one so you need to check if 1 then remove it
@@ -58,9 +59,9 @@ function CartItems({ item, flag, setFlag }) {
         }
     }
 
-    useEffect(() => {
-        items = cartItems;
-    }, [quantity, items]);
+    // useEffect(() => {
+    //     items = cartItems;
+    // }, [quantity, items]);
 
     return (
         <div

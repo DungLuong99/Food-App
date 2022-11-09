@@ -6,11 +6,14 @@ const actionType = {
     DELETE_ITEMS: ' DELETE_ITEMS',
     SET_MODIFY_ITEMS_SHOW: 'SET_MODIFY_ITEMS_SHOW',
     SET_SEARCH_RESULT: 'SET_SEARCH_RESULT',
-    SET_SORT_STATE: 'SET_SORT_STATE'
+    SET_SORT_STATE: 'SET_SORT_STATE',
+    RESET_CART: 'RESET_CART',
+    CHANGE_QUANTITY: 'CHANGE_QUANTITY',
 };
 
 const reducer = (state, action) => {
-    // console.log(state, action);
+    console.log("state", state);
+    console.log("action", action);
     switch (action.type) {
         case actionType.SET_USER:
             return {
@@ -29,10 +32,47 @@ const reducer = (state, action) => {
                 cartShow: action.cartShow,
             };
         case actionType.SET_CART_ITEMS:
+            const item = state.cartItems.find(item => item.id === action.payload.id);
+            if (item) {
+                return {
+                    ...state,
+                    cartItems: state.cartItems.map(item =>
+                        item.id === action.payload.id ?
+                            { ...item, quantity: item.quantity + 1 }
+                            : item)
+                }
+            }
+            // let preCart = [...state.cartItems];
+            // //mang [] ban dau
+            // // console.log("preCart", preCart);
+            // console.log("payload", action.payload);
+
+            // const newCart = preCart.map(item => {
+            //     //neu mang da co san pham thi` +1 so luong
+            //     if (item?.id === action.payload.id) {
+            //         return { ...item, quantity: item.quantity += 1 }
+
+            //     } else {
+            //         // neu chua co them san pham vao mang
+            //         return item
+            //     }
+            // })
+            // console.log("newCart", newCart);
             return {
                 ...state,
-                cartItems: action.cartItems,
+                //set mang moi thay cho mang cu
+                cartItems: [...state?.cartItems, action.payload]
             };
+        case actionType.RESET_CART:
+            return {
+                ...state,
+                cartItems: action.payload
+            }
+        case actionType.CHANGE_QUANTITY:
+            return {
+                ...state,
+                cartItems: action.quantity
+            }
         case actionType.DELETE_ITEMS:
             const newItems = [...state.foodItems];
             newItems.splice(action.payload, 1);

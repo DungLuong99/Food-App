@@ -19,7 +19,6 @@ function CartContainer() {
     const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
     const [flag, setFlag] = useState(1);
     const [total, setTotal] = useState(0);
-    console.log(cartItems);
 
     const showCart = () => {
         dispatch({
@@ -37,8 +36,8 @@ function CartContainer() {
 
     const clearCart = () => {
         dispatch({
-            type: actionType.SET_CART_ITEMS,
-            cartItems: [],
+            type: actionType.RESET_CART,
+            payload: [],
         });
         localStorage.setItem("cartItems", JSON.stringify([]));
     }

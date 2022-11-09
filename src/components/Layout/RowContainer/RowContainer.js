@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import { ShoppingCartOutlined } from '@ant-design/icons';
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, memo } from 'react'
 import { motion } from 'framer-motion'
 
 import style from './RowContainer.module.scss'
@@ -12,33 +12,28 @@ import productApi from '~/api/productAPI';
 const cx = classNames.bind(style);
 
 function RowContainer({ flag, data, scrollValue }) {
-    const [{ cartItems, modifyItemsShow }, dispatch] = useStateValue();
+    const [{ cartItems }, dispatch] = useStateValue();
     const [items, setItems] = useState([]);
 
-    console.log("dataRow", data);
+    console.log("cartItems", cartItems);
 
     const rowContainer = useRef();
     useEffect(() => {
         rowContainer.current.scrollLeft += scrollValue;
     }, [scrollValue]);
 
-    const addtoCart = () => {
+    const addtoCart = (item) => {
         dispatch({
             type: actionType.SET_CART_ITEMS,
-            cartItems: items,
+            payload: item,
         })
-        localStorage.setItem("cartItems", JSON.stringify(items));
+        // localStorage.setItem("cartItems", JSON.stringify(items));
+        // localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
     };
 
-    const showModifyItem = () => {
-        dispatch({
-            type: actionType.SET_MODIFY_ITEMS_SHOW,
-            modifyItemsShow: !modifyItemsShow,
-        })
-    }
 
-
-    useEffect(() => { addtoCart(); }, [items]);
+    // useEffect(() => { addtoCart(); }, [items]);
 
     return (
         <div
@@ -62,7 +57,9 @@ function RowContainer({ flag, data, scrollValue }) {
                                 <motion.div
                                     className={cx('add-to-cart')}
                                     whileTap={{ scale: 0.5 }}
-                                    onClick={() => setItems([...cartItems, item])}>
+                                    onClick={() => addtoCart(item)}
+                                // onClick={() => setItems([...cartItems, item])}
+                                >
                                     <ShoppingCartOutlined />
                                 </motion.div>
                             </div>

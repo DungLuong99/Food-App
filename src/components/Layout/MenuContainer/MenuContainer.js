@@ -10,18 +10,12 @@ import RowContainer from '../RowContainer'
 const cx = classNames.bind(style);
 
 
-function MenuContainer({ data }) {
+function MenuContainer({ data, refProp }, props) {
     // data truyen vao là 1 mang các obj sản phẩm
 
     const [filter, setFilter] = useState("chicken");
     const [{ sortState }, dispatch] = useStateValue();
-    // console.log(data); 
     const [dataSorted, setDataSorted] = useState(data);
-
-    console.log("dataSorted", dataSorted);
-    console.log("sortState", sortState);
-
-    // console.log("sortState", sortState);
 
     useEffect(() => {
 
@@ -94,45 +88,48 @@ function MenuContainer({ data }) {
     // )
     // }
 
+    // console.log("refProp", refProp);
+    return (
+        <div
+            ref={refProp}
+            className={cx('wrapper')}>
+            <p className={cx('title')} >
+                Our Hot Dishes
+            </p>
+            <div className={cx('inner')}>
 
-    return (<div className={cx('wrapper')}>
-        <p className={cx('title')} >
-            Our Hot Dishes
-        </p>
-        <div className={cx('inner')}>
+                <div className={cx('filter-category')}>
+                    {categories?.map((category) => (
+                        <motion.div
+                            key={category.id}
+                            className={cx(filter === category.urlParamName
+                                ? 'category-selected'
+                                : 'category')}
+                            whileTap={{ scale: 1.5 }}
+                            onClick={() =>
+                                setFilter(category.urlParamName)
+                            }
+                        >
+                            <div className={cx('category-icon')} >
+                                {category.icon}
+                            </div>
+                            <p className={cx('category-name')}>
+                                {category.name}
+                            </p>
+                        </motion.div>
+                    ))}
+                </div>
 
-            <div className={cx('filter-category')}>
-                {categories?.map((category) => (
-                    <motion.div
-                        key={category.id}
-                        className={cx(filter === category.urlParamName
-                            ? 'category-selected'
-                            : 'category')}
-                        whileTap={{ scale: 1.5 }}
-                        onClick={() =>
-                            setFilter(category.urlParamName)
-                        }
-                    >
-                        <div className={cx('category-icon')} >
-                            {category.icon}
-                        </div>
-                        <p className={cx('category-name')}>
-                            {category.name}
-                        </p>
-                    </motion.div>
-                ))}
+            </div>
+            <div className={cx('category-items')}>
+                <RowContainer
+                    data={dataSorted?.filter((item) => item.category === filter)}
+                // ?.filter((item) => item.category === filter)}
+                />
             </div>
 
-        </div>
-        <div className={cx('category-items')}>
-            <RowContainer
-                data={dataSorted?.filter((item) => item.category === filter)}
-            // ?.filter((item) => item.category === filter)}
-            />
-        </div>
 
-
-    </div>);
+        </div>);
 }
 
 export default MenuContainer;

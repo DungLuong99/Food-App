@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 import style from './HomeContainer.module.scss'
 import Delivery from '~/assets/img/delivery.png'
@@ -9,16 +9,34 @@ import SlideshowContainer from '../SlideshowContainer'
 import MenuContainer from '../MenuContainer'
 import CartContainer from '../CartContainer'
 import { useStateValue } from '~/context/StateProvider'
+import { Link } from 'react-router-dom'
 
 const cx = classNames.bind(style);
 
 function HomeContainer({ data }) {
 
-
     const [{ foodItems, cartShow }, dispatch] = useStateValue();
 
     const [scrollValue, setScrollvalue] = useState(0);
+
+    const menuRef = useRef(null);
+
+    const gotoMenu = () => {
+        window.scrollTo({
+
+            top: menuRef.current.offsetTop,
+
+            behavior: "smooth",
+
+            // You can also assign value "auto" 
+
+            // to the behavior parameter. 
+
+        });
+    }
+
     useEffect(() => { }, [scrollValue, cartShow]);
+
     return (<div className={cx('wrapper')}>
 
         <div className={cx('intro')}>
@@ -46,7 +64,13 @@ function HomeContainer({ data }) {
                     deserunt recusandae ipsa minus eos sunt, dolores illo repellat facere
                     suscipit!
                 </p>
-                <button type='button' className={cx('button-order')}>Order Now</button>
+                <button
+                    type='button'
+                    className={cx('button-order')}
+                    onClick={gotoMenu}
+                >
+                    Order Now
+                </button>
             </div>
 
             <div className={cx('intro-right')}>
@@ -72,8 +96,6 @@ function HomeContainer({ data }) {
         <SlideshowContainer />
         <MenuContainer data={foodItems} />
         {cartShow && <CartContainer />}
-
-
     </div>);
 }
 
