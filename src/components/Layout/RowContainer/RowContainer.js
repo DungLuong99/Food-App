@@ -7,7 +7,6 @@ import style from './RowContainer.module.scss'
 import { useStateValue } from '~/context/StateProvider';
 import { actionType } from '~/context/reducer';
 import NotFound from '~/assets/img/NotFound.svg'
-import productApi from '~/api/productAPI';
 
 const cx = classNames.bind(style);
 
@@ -15,7 +14,6 @@ function RowContainer({ flag, data, scrollValue }) {
     const [{ cartItems }, dispatch] = useStateValue();
     const [items, setItems] = useState([]);
 
-    console.log("cartItems", cartItems);
 
     const rowContainer = useRef();
     useEffect(() => {

@@ -12,8 +12,8 @@ const actionType = {
 };
 
 const reducer = (state, action) => {
-    console.log("state", state);
-    console.log("action", action);
+    // console.log("state", state);
+    // console.log("action", action);
     switch (action.type) {
         case actionType.SET_USER:
             return {
@@ -42,25 +42,8 @@ const reducer = (state, action) => {
                             : item)
                 }
             }
-            // let preCart = [...state.cartItems];
-            // //mang [] ban dau
-            // // console.log("preCart", preCart);
-            // console.log("payload", action.payload);
-
-            // const newCart = preCart.map(item => {
-            //     //neu mang da co san pham thi` +1 so luong
-            //     if (item?.id === action.payload.id) {
-            //         return { ...item, quantity: item.quantity += 1 }
-
-            //     } else {
-            //         // neu chua co them san pham vao mang
-            //         return item
-            //     }
-            // })
-            // console.log("newCart", newCart);
             return {
                 ...state,
-                //set mang moi thay cho mang cu
                 cartItems: [...state?.cartItems, action.payload]
             };
         case actionType.RESET_CART:
