@@ -8,10 +8,10 @@ import { initialState } from "./context/initialState";
 import reducer, { actionType } from "./context/reducer";
 import { useStateValue } from '~/context/StateProvider';
 import productApi from "./api/productAPI";
+import axios from "axios";
 
 function App() {
   const [{ foodItems }, dispatch] = useStateValue();
-  // console.log(foodItems);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -24,7 +24,6 @@ function App() {
     }
     fetchProducts().then(
       response => {
-        // console.log(response);
         dispatch({
           type: actionType.SET_FOOD_ITEMS,
           foodItems: response,
