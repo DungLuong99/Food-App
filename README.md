@@ -37,6 +37,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 - Create Product.
 
 ![Create](https://photos.google.com/photo/AF1QipNuA086TiOnItZE8PtHJKeTopBO4XAChg49Nbeg).
+![create](https://user-images.githubusercontent.com/76811035/220154091-0d6ef374-9816-4f87-bf37-54e4)
 
 - Update Product.
 
