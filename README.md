@@ -28,16 +28,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 - Home.
 
-![alt](https://photos.google.com/photo/AF1QipOBWKq_CCnMAEUbhpCquNVlPRC-b_B7K9TeRA9P).
+![Home](https://photos.google.com/photo/AF1QipOBWKq_CCnMAEUbhpCquNVlPRC-b_B7K9TeRA9P).
 
 - Menu.
 
-![alt](https://photos.google.com/photo/AF1QipOfwYppFNMXUWHjWU2IQAp9LfrsUydLrl8D9GTU).
+![Menu](https://photos.google.com/photo/AF1QipOfwYppFNMXUWHjWU2IQAp9LfrsUydLrl8D9GTU).
 
 - Create Product.
 
-![alt](https://photos.google.com/photo/AF1QipNuA086TiOnItZE8PtHJKeTopBO4XAChg49Nbeg).
+![Create](https://photos.google.com/photo/AF1QipNuA086TiOnItZE8PtHJKeTopBO4XAChg49Nbeg).
 
 - Update Product.
 
-![alt](https://photos.google.com/photo/AF1QipMmgw6noE9Qrq3UuR89sNp-a_rgqxTrTi3V6ISD).
+![Update](https://photos.google.com/photo/AF1QipMmgw6noE9Qrq3UuR89sNp-a_rgqxTrTi3V6ISD).
